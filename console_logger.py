@@ -46,6 +46,18 @@ class ConsoleLogger:
     @staticmethod
     def log_issue_establishing_connection(num):
         print(colored(f"[Times Attempted:{num}]issue establishing connection","red"))
+
     @staticmethod
     def log_deactivation_or_activation(message,color):
         print(colored(message,color))
+
+    @staticmethod
+    def log_before_quitting(message):
+        print(colored(message,'red'))
+        ConsoleLogger.log_info_static("There are fields you must set before running the client!")
+        ConsoleLogger.log_info_static("Please check the documentation for fields that must be set!")
+        input("Press Enter To Exit....")
+        quit()
+    @staticmethod
+    def log_info_static(data):
+        print(colored("[Info] ~ ","yellow") + data)

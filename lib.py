@@ -10,7 +10,7 @@ class Client:
         self.config = config
 
     """
-    user would pass in a list of coroutines that 
+    user would pass in a list of coroutine function definitions that 
     should be executed during program execution
     """
     def define_tasks(self,tasks):
@@ -19,12 +19,10 @@ class Client:
     """
     main execution 
     """
-    async def main(self ,restart = False):
+    async def main(self,websocket):
         self.prerequisite_check()
-        if restart != True:
-            self.password = os.environ.get("rpw_hoi_gs")
+        self.password = os.environ.get("rpw_hoi_gs")
 
-        websocket = await self.establish_connection()
         connection_response = await self.send_connection_credentials(websocket)
         ConsoleLogger.log_auth_status(connection_response)
         await self.await_tasks()

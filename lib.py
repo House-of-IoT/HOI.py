@@ -48,7 +48,6 @@ class Client:
             t2 = loop.create_task(self.monitor_door(self.config.door_check_interval))
             await asyncio.wait([t1,t2])
 
-
     async def establish_connection(self):
         times_attempted = 1
         while True:
@@ -66,4 +65,7 @@ class Client:
             ConsoleLogger.log_before_quitting("No host was set for the client!")
         if(self.tasks == None):
             ConsoleLogger.log_before_quitting("No tasks were defined for the client!")
-
+        if(self.name == None):
+            ConsoleLogger.log_before_quitting("No name was defined for the client!")
+        if(self.type == None):
+            ConsoleLogger.log_before_quitting("No type was defined for the client!")

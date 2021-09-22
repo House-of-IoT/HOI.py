@@ -1,3 +1,4 @@
+from re import S
 from termcolor import colored
 from colorama import init
 
@@ -58,6 +59,15 @@ class ConsoleLogger:
         ConsoleLogger.log_info_static("Please check the documentation for fields that must be set!")
         input("Press Enter To Exit....")
         quit()
+
     @staticmethod
     def log_info_static(data):
         print(colored("[Info] ~ ","yellow") + data)
+
+    @staticmethod
+    def log_auth_status(status):
+        if(status == "success"):
+            print(colored("Authentication passed, you are now connected to the server!","green"))
+        else:
+            print(colored("Authentication failed, you are not connected to the server!","red"))
+            ConsoleLogger.log_info_static("You may be blocked from the server if you attempted too many requests! An admin would need to remove your ban")

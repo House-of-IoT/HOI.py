@@ -2,25 +2,12 @@ import websockets
 import asyncio
 import json
 from console_logger import ConsoleLogger
+from device_config import Config
 import os
 
 class Client:
-    def __init__(self):
-        self.port = None
-        self.host = None
-        self.password = None
-        self.tasks = None
-        self.name = None
-        self.type = None
-
-    def set_host(self,host):
-        self.host = host
-
-    def set_port(self,port):
-        self.port = port
-
-    def set_password(self,password):
-        self.password = password
+    def __init__(self,config):
+        self.config = config
 
     """
     user would pass in a list of coroutines that 
@@ -39,14 +26,13 @@ class Client:
 
         websocket = await self.establish_connection()
         connection_response = await self.send_connection_credentials(websocket)
+        ConsoleLogger.log_auth_status(connection_response)
 
-        if connection_response != "success":
-            self.logger.log_failed_auth()
-        else:
-            self.logger.log_passed_auth()
-            t1 = loop.create_task(self.test_send_periodic_data_and_listen(websocket))
-            t2 = loop.create_task(self.monitor_door(self.config.door_check_interval))
-            await asyncio.wait([t1,t2])
+    async def await_tasks(self):
+        loop_created_tasks = []
+        for task in self.config.tasks:
+            loop_created_tasks.append(loop.create_task(task))
+        await asyncio.wait(loop_created_tasks)
 
     async def establish_connection(self):
         times_attempted = 1
@@ -59,13 +45,13 @@ class Client:
                 await asyncio.sleep(6)
 
     def prerequisite_check(self):
-        if(self.port == None):
+        if(self.config.port == None):
             ConsoleLogger.log_before_quitting('No port was set for the client!')
-        if(self.host == None):
+        if(self.config.host == None):
             ConsoleLogger.log_before_quitting("No host was set for the client!")
-        if(self.tasks == None):
+        if(self.config.tasks == None):
             ConsoleLogger.log_before_quitting("No tasks were defined for the client!")
-        if(self.name == None):
+        if(self.config.name == None):
             ConsoleLogger.log_before_quitting("No name was defined for the client!")
-        if(self.type == None):
+        if(self.config.type == None):
             ConsoleLogger.log_before_quitting("No type was defined for the client!")

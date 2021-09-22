@@ -71,3 +71,5 @@ class ConsoleLogger:
         else:
             print(colored("Authentication failed, you are not connected to the server!","red"))
             ConsoleLogger.log_info_static("You may be blocked from the server if you attempted too many requests! An admin would need to remove your ban")
+            input("Press Enter To Exit....")
+            quit()

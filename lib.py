@@ -27,6 +27,7 @@ class Client:
         websocket = await self.establish_connection()
         connection_response = await self.send_connection_credentials(websocket)
         ConsoleLogger.log_auth_status(connection_response)
+        await self.await_tasks()
 
     async def await_tasks(self):
         loop_created_tasks = []
@@ -55,3 +56,14 @@ class Client:
             ConsoleLogger.log_before_quitting("No name was defined for the client!")
         if(self.config.type == None):
             ConsoleLogger.log_before_quitting("No type was defined for the client!")
+
+    async def send_connection_credentials(self,websocket):
+        await websocket.send(self.password)
+        await websocket.send(self.name_and_type())
+        await websocket.send("main")
+        connection_response = await websocket.recv()
+        return connection_response
+    
+    def name_and_type(self):
+        data = {"name":self.config.name , "type":self.config.type}
+        return json.dumps(data)

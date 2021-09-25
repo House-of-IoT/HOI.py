@@ -5,10 +5,11 @@ This library handles the authentication protocol and main task execution for you
 please take a look in the docs section of this repository.
 
 
-# Sample Usage
+# Sample Usage for bots
 The client in this piece of code actually handles task execution. The implementation has no limits to the amount of tasks that 
 can be executed in the main event loop. You will need to pass a list of tasks to `client.main` as the second argument as seen in the
-example below. 
+example below. Ideally you would have two tasks, one for listening to the server for control requests and one for monitoring the state
+of the hardware(sensors and other setups).
 
 ```python3
     import hoi_client

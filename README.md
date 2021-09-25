@@ -23,7 +23,7 @@ of the hardware(sensors and other setups). Please check [MotionDetectionCamera](
     async def main():
         #setup config and client
         config = hoi_client.Config(PORT,HOST,PASSWORD,NAME,TYPE)
-        client = hoi_client.client(config)
+        client = hoi_client.Client(config)
         
         #gather websocket connection
         websocket = client.establish_connection()      

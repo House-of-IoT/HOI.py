@@ -12,17 +12,17 @@ class Client:
     """
     main execution 
     """
-    async def main(self,websocket):
+    async def main(self,websocket,tasks):
         self.prerequisite_check()
         self.password = os.environ.get("rpw_hoi_gs")
 
         connection_response = await self.send_connection_credentials(websocket)
         ConsoleLogger.log_auth_status(connection_response)
-        await self.await_tasks()
+        await self.await_tasks(tasks)
 
-    async def await_tasks(self):
+    async def await_tasks(self,tasks):
         loop_created_tasks = []
-        for task in self.config.tasks:
+        for task in tasks:
             loop_created_tasks.append(loop.create_task(task))
         await asyncio.wait(loop_created_tasks)
 

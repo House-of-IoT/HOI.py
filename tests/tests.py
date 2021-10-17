@@ -3,6 +3,9 @@ import websockets
 from hoi_client.device_config import Config
 from hoi_client.client import Client
 
+import sys
+import os
+
 """The following tests assume there is a HOI-GeneralServer hosted at the below config location."""
 
 class Tests(unittest.IsolatedAsyncioTestCase):
@@ -14,7 +17,7 @@ class Tests(unittest.IsolatedAsyncioTestCase):
         self.task_one_executed = False
         self.task_two_executed = False
 
-        await self.authentication()
+        await self.successful_authentication()
         await self.requirements_check()
         await self.task_execution()
         await self.name_and_type()

@@ -18,13 +18,12 @@ class Tests(unittest.IsolatedAsyncioTestCase):
         self.task_two_executed = False
 
         await self.successful_authentication()
-        await self.requirements_check()
         await self.task_execution()
         await self.name_and_type()
 
     async def successful_authentication(self):
         self.client.password = ""
-        response = self.client.send_connection_credentials(self.websocket)
+        response = await self.client.send_connection_credentials(self.websocket)
         self.assertEqual(response,"success")
     
     async def task_execution(self):
@@ -33,7 +32,7 @@ class Tests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(self.task_two_executed)
 
     async def name_and_type(self):
-        name_and_type_data = self.client.name_and_type()
+        name_and_type_data = json.loads(self.client.name_and_type())
         self.assertEqual(name_and_type_data["name"],self.config.name)
         self.assertEqual(name_and_type_data["type"],self.config.type)
 

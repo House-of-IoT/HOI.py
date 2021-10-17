@@ -21,6 +21,7 @@ class Client:
         await self.await_tasks(tasks)
 
     async def await_tasks(self,tasks):
+        loop = asyncio.get_event_loop()
         loop_created_tasks = []
         for task in tasks:
             loop_created_tasks.append(loop.create_task(task))

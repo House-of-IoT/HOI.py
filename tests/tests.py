@@ -40,6 +40,5 @@ class Tests(unittest.IsolatedAsyncioTestCase):
     async def task_two(self):
         self.task_two_executed = True
 
-
 if __name__ == "__main__":
     unittest.main()

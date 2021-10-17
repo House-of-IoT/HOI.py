@@ -3,9 +3,6 @@ import websockets
 from hoi_client.device_config import Config
 from hoi_client.client import Client
 
-import sys
-import os
-
 """The following tests assume there is a HOI-GeneralServer hosted at the below config location."""
 
 class Tests(unittest.IsolatedAsyncioTestCase):

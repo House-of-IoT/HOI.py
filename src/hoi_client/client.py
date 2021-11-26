@@ -50,7 +50,7 @@ class Client:
             ConsoleLogger.log_before_quitting("No type was defined for the client!")
 
     async def send_connection_credentials(self,websocket):
-        await websocket.send(self.password)
+        await websocket.send(self.config.password)
         await websocket.send(self.name_and_type())
         await websocket.send("main")
         connection_response = await websocket.recv()

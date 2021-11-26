@@ -22,7 +22,6 @@ class Tests(unittest.IsolatedAsyncioTestCase):
         await self.name_and_type()
 
     async def successful_authentication(self):
-        self.client.password = ""
         response = await self.client.send_connection_credentials(self.websocket)
         self.assertEqual(response,"success")
     
